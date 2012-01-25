@@ -66,8 +66,8 @@ public class CashierTest {
         assertEquals(175, cashier.scanItemsAndReturnTotalPrice("Pommes"));
         assertEquals(230, cashier.scanItemsAndReturnTotalPrice("Cherries"));
 		assertEquals(380, cashier.scanItemsAndReturnTotalPrice("Bananas"));
-		assertEquals(380, cashier.scanItemsAndReturnTotalPrice("Bananas"));
-		assertEquals(480, cashier.scanItemsAndReturnTotalPrice("Apples"));
+		assertEquals(180, cashier.scanItemsAndReturnTotalPrice("Bananas"));
+		assertEquals(280, cashier.scanItemsAndReturnTotalPrice("Apples"));
     }
     
     @Test
@@ -76,16 +76,29 @@ public class CashierTest {
         assertEquals(100, cashier.scanItemsAndReturnTotalPrice("Mele"));
         assertEquals(200, cashier.scanItemsAndReturnTotalPrice("Pommes"));
         assertEquals(300, cashier.scanItemsAndReturnTotalPrice("Pommes"));
-		assertEquals(400, cashier.scanItemsAndReturnTotalPrice("Apples"));
-		assertEquals(400, cashier.scanItemsAndReturnTotalPrice("Pommes"));
-		assertEquals(400, cashier.scanItemsAndReturnTotalPrice("Mele"));
-		assertEquals(475, cashier.scanItemsAndReturnTotalPrice("Cherries"));
-        assertEquals(530, cashier.scanItemsAndReturnTotalPrice("Cherries"));
+		assertEquals(300, cashier.scanItemsAndReturnTotalPrice("Apples"));
+		assertEquals(100, cashier.scanItemsAndReturnTotalPrice("Pommes"));
+		assertEquals(150, cashier.scanItemsAndReturnTotalPrice("Mele"));
+		assertEquals(225, cashier.scanItemsAndReturnTotalPrice("Cherries"));
+        assertEquals(280, cashier.scanItemsAndReturnTotalPrice("Cherries"));
     }
     
     @Test
     public void iteration_5a() {
     	Cashier cashier = new Cashier();
-        assertEquals(680, cashier.scanItemsAndReturnTotalPrice("Mele,Pommes,Pommes,Apples,Pommes,Mele,Cherries,Cherries,Bananas"));
+        assertEquals(430, cashier.scanItemsAndReturnTotalPrice("Mele,Pommes,Pommes,Apples,Pommes,Mele,Cherries,Cherries,Bananas"));
+    }
+    
+    @Test
+    public void iteration_6() {
+    	Cashier cashier = new Cashier();
+        assertEquals(250, cashier.scanItemsAndReturnTotalPrice("Mele,Pommes,Pommes,Mele"));
+        assertEquals(200, cashier.scanItemsAndReturnTotalPrice("Bananas"));
+    }
+    
+    @Test
+    public void iteration_6_apples() {
+    	Cashier cashier = new Cashier();
+    	assertEquals(150, cashier.scanItemsAndReturnTotalPrice("Mele,Pommes,Pommes,Apples,Mele"));
     }
 }
