@@ -32,11 +32,11 @@ public class Cashier {
 
 	public int scanItem(String item) {
 		int itemPrice = 0;
-		if ("Apples".equals(item)) {
+		if ("Apples".equals(item) || "Pommes".equals(item) || "Mele".equals(item)) {
 			itemPrice = 100;
 		} else if ("Cherries".equals(item)) {
 			if (alreadyScannedCherries) {
-				itemPrice = 45;
+				itemPrice = 55;
 				alreadyScannedCherries = false;
 			} else {
 				itemPrice = 75;

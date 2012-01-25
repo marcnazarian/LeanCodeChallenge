@@ -28,7 +28,7 @@ public class CashierTest {
 	public void twoLotsOfCherriesIs30Discount() {
 		Cashier cashier = new Cashier();
 		assertEquals(75, cashier.scanItemsAndReturnTotalPrice("Cherries"));
-		assertEquals(120, cashier.scanItemsAndReturnTotalPrice("Cherries"));
+		assertEquals(130, cashier.scanItemsAndReturnTotalPrice("Cherries"));
 	}
 	
     @Test
@@ -40,7 +40,7 @@ public class CashierTest {
     @Test
     public void iteration_3_csvFormatAcceptedCherriesDiscount() {
     	Cashier cashier = new Cashier();
-        assertEquals(120, cashier.scanItemsAndReturnTotalPrice("Cherries,Cherries"));
+        assertEquals(130, cashier.scanItemsAndReturnTotalPrice("Cherries,Cherries"));
     }
     
     @Test
@@ -54,9 +54,20 @@ public class CashierTest {
     public void iteration_3a() {
     	Cashier cashier = new Cashier();
         assertEquals(75, cashier.scanItemsAndReturnTotalPrice("Cherries"));
-        assertEquals(120, cashier.scanItemsAndReturnTotalPrice("Cherries"));
-		assertEquals(270, cashier.scanItemsAndReturnTotalPrice("Bananas"));
-		assertEquals(270, cashier.scanItemsAndReturnTotalPrice("Bananas"));
+        assertEquals(130, cashier.scanItemsAndReturnTotalPrice("Cherries"));
+		assertEquals(280, cashier.scanItemsAndReturnTotalPrice("Bananas"));
+		assertEquals(280, cashier.scanItemsAndReturnTotalPrice("Bananas"));
+    }
+    
+    @Test
+    public void iteration_4() {
+    	Cashier cashier = new Cashier();
+        assertEquals(75, cashier.scanItemsAndReturnTotalPrice("Cherries"));
+        assertEquals(175, cashier.scanItemsAndReturnTotalPrice("Pommes"));
+        assertEquals(230, cashier.scanItemsAndReturnTotalPrice("Cherries"));
+		assertEquals(380, cashier.scanItemsAndReturnTotalPrice("Bananas"));
+		assertEquals(380, cashier.scanItemsAndReturnTotalPrice("Bananas"));
+		assertEquals(480, cashier.scanItemsAndReturnTotalPrice("Apples"));
     }
     
 }
