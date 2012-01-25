@@ -1,0 +1,6 @@
+Lean Code Challenge is a programming exercise proposed by Chris Parsons.
+Slides are available here:
+http://lanyrd.com/2011/software-craftsmanship/sfkgw/
+
+This git repository is my own implementation of this exercise in java.
+Each commit represents a "step".
