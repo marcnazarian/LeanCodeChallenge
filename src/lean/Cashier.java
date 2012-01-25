@@ -9,6 +9,7 @@ public class Cashier {
 
     private int totalPrice;
 	private boolean alreadyScannedCherries = false;
+	private boolean alreadyScannedBananas  = false;
 
 	public Cashier() {
 		totalPrice = 0;
@@ -35,14 +36,20 @@ public class Cashier {
 			itemPrice = 100;
 		} else if ("Cherries".equals(item)) {
 			if (alreadyScannedCherries) {
-				itemPrice = 55;
+				itemPrice = 45;
 				alreadyScannedCherries = false;
 			} else {
 				itemPrice = 75;
 				alreadyScannedCherries = true;
 			}
 		} else if ("Bananas".equals(item)) {
-			itemPrice = 150;
+			if (alreadyScannedBananas ) {
+				itemPrice = 0;
+				alreadyScannedBananas = false;
+			} else {
+				itemPrice = 150;
+				alreadyScannedBananas = true;
+			}
 		}
 		return itemPrice;
 	}
