@@ -3,6 +3,7 @@ package lean;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
 public class Cashier {
 
@@ -15,13 +16,16 @@ public class Cashier {
 
 	public void checkout(BufferedReader reader, PrintWriter writer) throws IOException {
     	while (true ) {
-    		scanItemAndReturnTotalPrice(reader.readLine());
+    		scanItemsAndReturnTotalPrice(reader.readLine());
         	writer.println(totalPrice);
         }
     }
 
-	public int scanItemAndReturnTotalPrice(String item) {
-		totalPrice += scanItem(item);
+	public int scanItemsAndReturnTotalPrice(String input) {
+		StringTokenizer stringTokenizer = new StringTokenizer(input, ",");
+		while (stringTokenizer.hasMoreTokens()) {
+			totalPrice += scanItem(stringTokenizer.nextToken());
+		}
 		return totalPrice;
 	}
 
