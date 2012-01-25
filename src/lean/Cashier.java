@@ -47,7 +47,7 @@ public class Cashier {
 		} else if ("Mele".equals(item)) {
 			nbMele++;
 			if (isSecondMele()) {
-				itemPrice = 50;
+				itemPrice = 0;
 			} else {
 				itemPrice = 100;
 			}

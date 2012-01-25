@@ -78,9 +78,14 @@ public class CashierTest {
         assertEquals(300, cashier.scanItemsAndReturnTotalPrice("Pommes"));
 		assertEquals(400, cashier.scanItemsAndReturnTotalPrice("Apples"));
 		assertEquals(400, cashier.scanItemsAndReturnTotalPrice("Pommes"));
-		assertEquals(450, cashier.scanItemsAndReturnTotalPrice("Mele"));
-		assertEquals(525, cashier.scanItemsAndReturnTotalPrice("Cherries"));
-        assertEquals(580, cashier.scanItemsAndReturnTotalPrice("Cherries"));
+		assertEquals(400, cashier.scanItemsAndReturnTotalPrice("Mele"));
+		assertEquals(475, cashier.scanItemsAndReturnTotalPrice("Cherries"));
+        assertEquals(530, cashier.scanItemsAndReturnTotalPrice("Cherries"));
     }
     
+    @Test
+    public void iteration_5a() {
+    	Cashier cashier = new Cashier();
+        assertEquals(680, cashier.scanItemsAndReturnTotalPrice("Mele,Pommes,Pommes,Apples,Pommes,Mele,Cherries,Cherries,Bananas"));
+    }
 }
