@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 public class Cashier {
 
     private int totalPrice;
+	private boolean alreadyScannedCherries = false;
 
 	public Cashier() {
 		totalPrice = 0;
@@ -29,7 +30,13 @@ public class Cashier {
 		if ("Apples".equals(item)) {
 			itemPrice = 100;
 		} else if ("Cherries".equals(item)) {
-			itemPrice = 75;
+			if (alreadyScannedCherries) {
+				itemPrice = 55;
+				alreadyScannedCherries = false;
+			} else {
+				itemPrice = 75;
+				alreadyScannedCherries = true;
+			}
 		} else if ("Bananas".equals(item)) {
 			itemPrice = 150;
 		}
