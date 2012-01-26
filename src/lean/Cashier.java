@@ -9,6 +9,14 @@ import java.util.StringTokenizer;
 
 public class Cashier {
 
+	private static final String BANANAS = "Bananas";
+	private static final String CHERRIES = "Cherries";
+	private static final String MELE = "Mele";
+	private static final String POMMES = "Pommes";
+	private static final String APPLES = "Apples";
+	
+	private static final String CSV_ITEMS_SEPARATOR = ",";
+	
 	private static final int PRICE_FOR_CHERRIES = 75;
 	private static final int PRICE_FOR_APPLES   = 100;
 	private static final int PRICE_FOR_POMMES   = 100;
@@ -30,11 +38,11 @@ public class Cashier {
 	}
 
 	private void initBasketContent() {
-		basketContent.put("Apples", 0);
-		basketContent.put("Pommes", 0);
-		basketContent.put("Mele", 0);
-		basketContent.put("Cherries", 0);
-		basketContent.put("Bananas", 0);
+		basketContent.put(APPLES, 0);
+		basketContent.put(POMMES, 0);
+		basketContent.put(MELE, 0);
+		basketContent.put(CHERRIES, 0);
+		basketContent.put(BANANAS, 0);
 	}
 
 	public void checkout(BufferedReader reader, PrintWriter writer) throws IOException {
@@ -44,7 +52,7 @@ public class Cashier {
 	}
 
 	public int scanItemsAndReturnTotalPrice(String input) {
-		StringTokenizer stringTokenizer = new StringTokenizer(input, ",");
+		StringTokenizer stringTokenizer = new StringTokenizer(input, CSV_ITEMS_SEPARATOR);
 		while (stringTokenizer.hasMoreTokens()) {
 			String currentItem = stringTokenizer.nextToken();
 			scanItem(currentItem);
@@ -70,15 +78,15 @@ public class Cashier {
 
 	private int getPriceForItem(String item) {
 		int itemPrice = 0;
-		if ("Apples".equals(item)) {
+		if (APPLES.equals(item)) {
 			itemPrice = getPriceForApples();
-		} else if ("Pommes".equals(item)) {
+		} else if (POMMES.equals(item)) {
 			itemPrice = getPriceForPommes();
-		} else if ("Mele".equals(item)) {
+		} else if (MELE.equals(item)) {
 			itemPrice = getPriceForMele();
-		} else if ("Cherries".equals(item)) {
+		} else if (CHERRIES.equals(item)) {
 			itemPrice = getPriceforCherries();
-		} else if ("Bananas".equals(item)) {
+		} else if (BANANAS.equals(item)) {
 			itemPrice = getPriceForBananas();
 		}
 		return itemPrice;
@@ -143,12 +151,12 @@ public class Cashier {
 	}
 
 	private boolean isAppleFamily(String currentItem) {
-		return "Apples".equals(currentItem) || "Pommes".equals(currentItem) || "Mele".equals(currentItem);
+		return APPLES.equals(currentItem) || POMMES.equals(currentItem) || MELE.equals(currentItem);
 	}
 	
 
 	private int getNbApplesInBasket() {
-		return basketContent.get("Apples") + basketContent.get("Pommes") + basketContent.get("Mele");
+		return basketContent.get(APPLES) + basketContent.get(POMMES) + basketContent.get(MELE);
 	}
 	
 	private boolean isFourthApple() {
@@ -156,19 +164,19 @@ public class Cashier {
 	}
 
 	private boolean isSecondCherries() {
-		return isFruitMultipleOf("Cherries", 2);
+		return isFruitMultipleOf(CHERRIES, 2);
 	}
 
 	private boolean isSecondBananas() {
-		return isFruitMultipleOf("Bananas", 2);
+		return isFruitMultipleOf(BANANAS, 2);
 	}
 
 	private boolean isSecondMele() {
-		return isFruitMultipleOf("Mele", 2);
+		return isFruitMultipleOf(MELE, 2);
 	}
 
 	private boolean isThirdPomme() {
-		return isFruitMultipleOf("Pommes", 3);
+		return isFruitMultipleOf(POMMES, 3);
 	}
 	
 	private boolean isFruitMultipleOf(String fruit, int multipleOf) {
