@@ -3,6 +3,8 @@ package lean;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Cashier {
@@ -15,110 +17,166 @@ public class Cashier {
 
 	private static final int DISCOUNT_FOR_SECOND_CHERRIES = 20;
 	private static final int DISCOUNT_FOR_SECOND_MELE = 50;
+	private static final int DISCOUNT_FOR_FOURTH_APPLE_FAMILY = 100;
+	private static final int DISCOUNT_FOR_FIFTH_PIECE_OF_FRUIT = 200;
 	
 	private int totalPrice;
 
-	private int nbPommes = 0;
-	private int nbMele = 0;
-	private int nbCherries = 0;
-	private int nbBananas = 0;
-	private int nbApples = 0;
-	private int nbPieceOfFruits = 0;
-
+	private Map<String, Integer> basketContent = new HashMap<String, Integer>();
+	
 	public Cashier() {
 		totalPrice = 0;
+		initBasketContent();
 	}
 
-	public void checkout(BufferedReader reader, PrintWriter writer)
-			throws IOException {
+	private void initBasketContent() {
+		basketContent.put("Apples", 0);
+		basketContent.put("Pommes", 0);
+		basketContent.put("Mele", 0);
+		basketContent.put("Cherries", 0);
+		basketContent.put("Bananas", 0);
+	}
+
+	public void checkout(BufferedReader reader, PrintWriter writer) throws IOException {
 		while (true) {
-			scanItemsAndReturnTotalPrice(reader.readLine());
-			writer.println(totalPrice);
+			writer.println(scanItemsAndReturnTotalPrice(reader.readLine()));
 		}
 	}
 
 	public int scanItemsAndReturnTotalPrice(String input) {
 		StringTokenizer stringTokenizer = new StringTokenizer(input, ",");
 		while (stringTokenizer.hasMoreTokens()) {
-			totalPrice += scanItem(stringTokenizer.nextToken());
-			if (isFifthPieceOfFruit()) {
-				totalPrice -= 200;
-			}
+			String currentItem = stringTokenizer.nextToken();
+			scanItem(currentItem);
 		}
 		return totalPrice;
 	}
 
-	public int scanItem(String item) {
+	private void scanItem(String currentItem) {
+		if (isKnownItem(currentItem)) {
+			addItemToBasket(currentItem);
+			totalPrice += getPriceForItem(currentItem);
+			applyDiscountOffTheBill(currentItem);
+		}
+	}
+	
+	private boolean isKnownItem(String currentItem) {
+		return basketContent.keySet().contains(currentItem);
+	}
+	
+	private void addItemToBasket(String item) {
+		basketContent.put(item, basketContent.get(item) + 1);
+	}
+
+	private int getPriceForItem(String item) {
 		int itemPrice = 0;
 		if ("Apples".equals(item)) {
-			nbPieceOfFruits++;
-			nbApples++;
-			itemPrice = PRICE_FOR_APPLES;
-			if (isFourthApple()) {
-				itemPrice -= 100;
-			}
+			itemPrice = getPriceForApples();
 		} else if ("Pommes".equals(item)) {
-			nbPieceOfFruits++;
-			nbPommes++;
-			nbApples ++;
-			itemPrice = PRICE_FOR_POMMES;
-			if (isThirdPomme()) {
-				itemPrice = 0;
-			}
-			if (isFourthApple()) {
-				itemPrice -= 100;
-			}
+			itemPrice = getPriceForPommes();
 		} else if ("Mele".equals(item)) {
-			nbPieceOfFruits++;
-			nbMele++;
-			nbApples++;
-			itemPrice = PRICE_FOR_MELE;
-			if (isSecondMele()) {
-				itemPrice = PRICE_FOR_MELE - DISCOUNT_FOR_SECOND_MELE;
-			}
-			if (isFourthApple()) {
-				itemPrice -= 100;
-			}
+			itemPrice = getPriceForMele();
 		} else if ("Cherries".equals(item)) {
-			nbPieceOfFruits++;
-			nbCherries++;
-			itemPrice = PRICE_FOR_CHERRIES;
-			if (isSecondCherries()) {
-				itemPrice = PRICE_FOR_CHERRIES - DISCOUNT_FOR_SECOND_CHERRIES;
-			}
+			itemPrice = getPriceforCherries();
 		} else if ("Bananas".equals(item)) {
-			nbPieceOfFruits++;
-			nbBananas++;
-			itemPrice = PRICE_FOR_BANANAS;
-			if (isSecondBananas()) {
-				itemPrice = 0;
-			}
+			itemPrice = getPriceForBananas();
 		}
 		return itemPrice;
 	}
 
+	private int getPriceForApples() {
+		return PRICE_FOR_APPLES;
+	}
+	
+	private int getPriceForPommes() {
+		int itemPrice = PRICE_FOR_POMMES;
+		if (isThirdPomme()) {
+			itemPrice = 0;
+		}
+		return itemPrice;
+	}
+	
+	private int getPriceForMele() {
+		int itemPrice = PRICE_FOR_MELE;
+		if (isSecondMele()) {
+			itemPrice -= DISCOUNT_FOR_SECOND_MELE;
+		}
+		return itemPrice;
+	}
+	
+	private int getPriceforCherries() {
+		int itemPrice = PRICE_FOR_CHERRIES;
+		if (isSecondCherries()) {
+			itemPrice -= DISCOUNT_FOR_SECOND_CHERRIES;
+		}
+		return itemPrice;
+	}
+
+	private int getPriceForBananas() {
+		int itemPrice = PRICE_FOR_BANANAS;
+		if (isSecondBananas()) {
+			itemPrice = 0;
+		}
+		return itemPrice;
+	}
+	
+	private void applyDiscountOffTheBill(String currentItem) {
+		if (isFifthPieceOfFruit()) {
+			totalPrice -= DISCOUNT_FOR_FIFTH_PIECE_OF_FRUIT;
+		}
+		if (isAppleFamily(currentItem) && isFourthApple()) {
+			totalPrice -= DISCOUNT_FOR_FOURTH_APPLE_FAMILY;
+		}
+	}
+
 	private boolean isFifthPieceOfFruit() {
-		return nbPieceOfFruits != 0 && nbPieceOfFruits % 5 == 0;
+		int nbPieceOfFruit = getNbPieceOfFruit();
+		return nbPieceOfFruit != 0 && nbPieceOfFruit % 5 == 0;
+	}
+	
+	private int getNbPieceOfFruit() {
+		int nbPieceOfFruit = 0;
+		for (int value : basketContent.values()) {
+		    nbPieceOfFruit += value;
+		}
+		return nbPieceOfFruit;
+	}
+
+	private boolean isAppleFamily(String currentItem) {
+		return "Apples".equals(currentItem) || "Pommes".equals(currentItem) || "Mele".equals(currentItem);
+	}
+	
+
+	private int getNbApplesInBasket() {
+		return basketContent.get("Apples") + basketContent.get("Pommes") + basketContent.get("Mele");
 	}
 	
 	private boolean isFourthApple() {
-		return nbApples != 0 && nbApples % 4 == 0;
+		return isNumberMultipleOf(getNbApplesInBasket(), 4);
 	}
 
 	private boolean isSecondCherries() {
-		return nbCherries % 2 == 0;
+		return isFruitMultipleOf("Cherries", 2);
 	}
 
 	private boolean isSecondBananas() {
-		return nbBananas % 2 == 0;
+		return isFruitMultipleOf("Bananas", 2);
 	}
 
 	private boolean isSecondMele() {
-		return nbMele % 2 == 0;
+		return isFruitMultipleOf("Mele", 2);
 	}
 
 	private boolean isThirdPomme() {
-		return nbPommes % 3 == 0;
+		return isFruitMultipleOf("Pommes", 3);
+	}
+	
+	private boolean isFruitMultipleOf(String fruit, int multipleOf) {
+		return isNumberMultipleOf(basketContent.get(fruit), multipleOf);
 	}
 
+	private boolean isNumberMultipleOf(int number, int multipleOf) {
+		return number % multipleOf == 0;
+	}
+	
 }

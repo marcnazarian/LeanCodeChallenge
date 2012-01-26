@@ -25,42 +25,27 @@ public class CashierTest {
 	}
 	
 	@Test
-	public void twoLotsOfCherriesIs30Discount() {
+	public void twoLotsOfCherriesIs20Discount() {
 		Cashier cashier = new Cashier();
 		assertEquals(75, cashier.scanItemsAndReturnTotalPrice("Cherries"));
 		assertEquals(130, cashier.scanItemsAndReturnTotalPrice("Cherries"));
 	}
 	
     @Test
-    public void iteration_3_csvFormatAccepted() {
+    public void csvFormatIsAccepted() {
     	Cashier cashier = new Cashier();
         assertEquals(325, cashier.scanItemsAndReturnTotalPrice("Apples,Cherries,Bananas"));
     }
     
     @Test
-    public void iteration_3_csvFormatAcceptedCherriesDiscount() {
-    	Cashier cashier = new Cashier();
-        assertEquals(130, cashier.scanItemsAndReturnTotalPrice("Cherries,Cherries"));
-    }
-    
-    @Test
-	public void secondBanansIsFree() {
+	public void secondBananasIsFree() {
 		Cashier cashier = new Cashier();
 		assertEquals(150, cashier.scanItemsAndReturnTotalPrice("Bananas"));
 		assertEquals(150, cashier.scanItemsAndReturnTotalPrice("Bananas"));
 	}
     
     @Test
-    public void iteration_3a() {
-    	Cashier cashier = new Cashier();
-        assertEquals(75, cashier.scanItemsAndReturnTotalPrice("Cherries"));
-        assertEquals(130, cashier.scanItemsAndReturnTotalPrice("Cherries"));
-		assertEquals(280, cashier.scanItemsAndReturnTotalPrice("Bananas"));
-		assertEquals(280, cashier.scanItemsAndReturnTotalPrice("Bananas"));
-    }
-    
-    @Test
-    public void iteration_4() {
+    public void pommesIsAlsoAccepted() {
     	Cashier cashier = new Cashier();
         assertEquals(75, cashier.scanItemsAndReturnTotalPrice("Cherries"));
         assertEquals(175, cashier.scanItemsAndReturnTotalPrice("Pommes"));
@@ -71,33 +56,20 @@ public class CashierTest {
     }
     
     @Test
-    public void iteration_5() {
-    	Cashier cashier = new Cashier();
-        assertEquals(100, cashier.scanItemsAndReturnTotalPrice("Mele"));
-        assertEquals(200, cashier.scanItemsAndReturnTotalPrice("Pommes"));
-        assertEquals(300, cashier.scanItemsAndReturnTotalPrice("Pommes"));
-		assertEquals(300, cashier.scanItemsAndReturnTotalPrice("Apples"));
-		assertEquals(100, cashier.scanItemsAndReturnTotalPrice("Pommes"));
-		assertEquals(150, cashier.scanItemsAndReturnTotalPrice("Mele"));
-		assertEquals(225, cashier.scanItemsAndReturnTotalPrice("Cherries"));
-        assertEquals(280, cashier.scanItemsAndReturnTotalPrice("Cherries"));
-    }
-    
-    @Test
-    public void iteration_5a() {
+    public void discountOnThirdPommesAndSecondMela() {
     	Cashier cashier = new Cashier();
         assertEquals(430, cashier.scanItemsAndReturnTotalPrice("Mele,Pommes,Pommes,Apples,Pommes,Mele,Cherries,Cherries,Bananas"));
     }
     
     @Test
-    public void iteration_6() {
+    public void extraDiscountForFourthApplesAndFifthFruit() {
     	Cashier cashier = new Cashier();
         assertEquals(250, cashier.scanItemsAndReturnTotalPrice("Mele,Pommes,Pommes,Mele"));
         assertEquals(200, cashier.scanItemsAndReturnTotalPrice("Bananas"));
     }
     
     @Test
-    public void iteration_6_apples() {
+    public void extraDiscountForFourthApplesAndFifthFruitApplesOnly() {
     	Cashier cashier = new Cashier();
     	assertEquals(150, cashier.scanItemsAndReturnTotalPrice("Mele,Pommes,Pommes,Apples,Mele"));
     }
